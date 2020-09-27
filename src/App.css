@@ -1,17 +1,18 @@
-.app
-{
-    background-color: #fafafa;
-    height: 100vh;
+.app {
+  background-color: #fafafa;
+  height: 100%;
 }
 
-.app__header
-{
-    object-fit:contain;
-    padding:20px ;
-    border-bottom: 1px solid lightgrey;
+.app__header {
+  object-fit: contain;
+  padding: 20px;
+  border-bottom: 1px solid lightgrey;
 }
-.app__headerimage
-{
-object-fit:contain;
-background-color: white;
+.app__headerimage {
+  object-fit: contain;
+  background-color: white;
+}
+.app-signup {
+  display: flex;
+  flex-direction: column;
 }

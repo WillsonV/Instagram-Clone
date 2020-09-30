@@ -61,22 +61,24 @@ function Post({ postId, user, username, caption, ImageUrl }) {
           </p>
         ))}
       </div>
-      <form class="post__commentbox">
-        <input
-          className="post-input"
-          type="texrt"
-          placeholder="Add a comment..."
-          onChange={(e) => setComment(e.target.value)}
-        />
-        <button
-          className="post-button"
-          disabled={!comment}
-          type="submit"
-          onClick={postComment}
-        >
-          Post
-        </button>
-      </form>
+      {user && (
+        <form class="post__commentbox">
+          <input
+            className="post-input"
+            type="texrt"
+            placeholder="Add a comment..."
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <button
+            className="post-button"
+            disabled={!comment}
+            type="submit"
+            onClick={postComment}
+          >
+            Post
+          </button>
+        </form>
+      )}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { db, auth } from "./firebase";
 import { Modal, makeStyles, Button, Input } from "@material-ui/core";
 import ImageUpload from "./ImageUpload";
 import InstagramEmbed from "react-instagram-embed";
+import UserprofileAvatarHeader from "./UserprofileAvatarHeader";
 
 function getModalStyle() {
   const top = 50;
@@ -76,6 +77,7 @@ function App() {
         return authUser.user.updateProfile({ displayName: username });
       })
       .catch((error) => alert(error.message));
+    setOpen(false);
   };
 
   const signIn = (event) => {
@@ -165,7 +167,11 @@ function App() {
           className="app__headerimage"
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         />
-
+        {user && user.displayName ? (
+          <UserprofileAvatarHeader Currentuser={user.displayName} />
+        ) : (
+          user && <UserprofileAvatarHeader Currentuser={username} />
+        )}
         {user ? (
           <Button onClick={() => auth.signOut()}>Log out</Button>
         ) : (
@@ -204,8 +210,12 @@ function App() {
           />
         </div>
       </div>
-      {user?.displayName ? (
-        <ImageUpload username={user?.displayName} />
+      {user ? (
+        user.displayName ? (
+          <ImageUpload username={user?.displayName} />
+        ) : (
+          <ImageUpload username={username} />
+        )
       ) : (
         <h2>Sorry You need to log in to Upload</h2>
       )}

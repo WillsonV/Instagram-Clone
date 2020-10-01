@@ -32,3 +32,11 @@
   margin-left: 20px;
   padding-top: 10px;
 }
+
+.app-loggedincontainer {
+  display: flex;
+  flex-direction: row;
+}
+.app-impageupload-msg {
+  margin-left: 10%;
+}

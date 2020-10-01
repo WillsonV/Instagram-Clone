@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Paper, makeStyles } from "@material-ui/core";
 import { storage, db } from "./firebase";
 import firebase from "firebase";
 import "./imageUpload.css";
@@ -52,19 +52,40 @@ function ImageUpload({ username }) {
     );
   };
 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: "flex",
+      flexWrap: "wrap",
+      "& > *": {
+        marginLeft: theme.spacing(5),
+        margin: theme.spacing(1),
+        width: theme.spacing(100),
+        height: theme.spacing(16),
+      },
+    },
+  }));
+  const classes = useStyles();
   return (
-    <div className="imageupload">
-      <progress className="imageupload-progress" value={progress} max="100" />
-      <input
-        type="text"
-        placeholder="Enter Caption..."
-        value={caption}
-        onChange={(event) => setCaption(event.target.value)}
-      ></input>
-      <input type="file" onChange={handleChange}></input>
-      <Button className="image-upload-button" onClick={handleUpload}>
-        Upload
-      </Button>
+    <div className="">
+      <div className={classes.root}>
+        <Paper elevation={3}>
+          <progress
+            className="imageupload-progress"
+            value={progress}
+            max="100"
+          />
+          <input
+            type="text"
+            placeholder="Enter Caption..."
+            value={caption}
+            onChange={(event) => setCaption(event.target.value)}
+          ></input>
+          <input type="file" onChange={handleChange}></input>
+          <Button className="image-upload-button" onClick={handleUpload}>
+            Upload
+          </Button>
+        </Paper>
+      </div>
     </div>
   );
 }

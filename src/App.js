@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Post from "./Post.js";
@@ -40,6 +40,8 @@ function App() {
   const [email, setEmail] = useState("");
   const [user, setUser] = useState(null);
   const [openSignIn, setOpenSignIn] = useState(false);
+
+  const [openImageUpload, setOpenImageUpload] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -162,18 +164,41 @@ function App() {
           </div>
         </Modal>
 
+        <Modal
+          open={openImageUpload}
+          onClose={() => setOpenImageUpload(false)}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <div style={modalStyle} className={classes.paper}>
+            {user ? (
+              user.displayName ? (
+                <ImageUpload username={user?.displayName} />
+              ) : (
+                <ImageUpload username={username} />
+              )
+            ) : (
+              <h2>Sorry You need to log in to Upload</h2>
+            )}
+          </div>
+        </Modal>
+
         <img
           alt="Instagram"
           className="app__headerimage"
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         />
-        {user && user.displayName ? (
-          <UserprofileAvatarHeader Currentuser={user.displayName} />
-        ) : (
-          user && <UserprofileAvatarHeader Currentuser={username} />
-        )}
+
         {user ? (
-          <Button onClick={() => auth.signOut()}>Log out</Button>
+          <div className="app-loggedincontainer">
+            {user && user.displayName ? (
+              <UserprofileAvatarHeader Currentuser={user.displayName} />
+            ) : (
+              user && <UserprofileAvatarHeader Currentuser={username} />
+            )}
+            <Button onClick={() => setOpenImageUpload(true)}>Upload</Button>
+            <Button onClick={() => auth.signOut()}>Log out</Button>
+          </div>
         ) : (
           <div className="app-logincontainer">
             <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
@@ -217,7 +242,9 @@ function App() {
           <ImageUpload username={username} />
         )
       ) : (
-        <h2>Sorry You need to log in to Upload</h2>
+        <h2 className="app-impageupload-msg">
+          Sorry , You need to log in to Upload
+        </h2>
       )}
     </div>
   );
